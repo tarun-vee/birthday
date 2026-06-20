@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F7F1E8;
+  --paper: #EFE4D2;
+  --dark-brown: #4A3728;
+  --coffee: #8B6B4A;
+  --gold: #D4B16A;
+  --text: #2E2E2E;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  /* Layered paper texture: noise + subtle warm grain */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.065'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0.05 0 1 0 0 0.03 0 0 1 0 0.01 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23grain)'/%3E%3C/svg%3E");
+}
+
+/* ─── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--coffee); border-radius: 4px; }
+
+/* ─── Typewriter cursor ─────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: var(--gold);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+/* ─── Floating particles ─────────────────────── */
+@keyframes floatUp {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.7; }
+  33%  { transform: translateY(-40px) translateX(12px) scale(1.1); }
+  66%  { transform: translateY(-80px) translateX(-8px) scale(0.9); }
+  100% { transform: translateY(-140px) translateX(5px) scale(0.8); opacity: 0; }
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
+
+/* ─── Scroll indicator bounce ───────────────── */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+.scroll-bounce { animation: scrollBounce 1.6s ease-in-out infinite; }
+
+/* ─── Torn paper edge (top of section) ─────── */
+.torn-edge-top {
+  position: relative;
+}
+.torn-edge-top::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--bg);
+  clip-path: polygon(
+    0% 100%,0% 0%,2% 60%,4% 20%,6% 80%,8% 30%,10% 70%,12% 15%,14% 55%,
+    16% 90%,18% 40%,20% 75%,22% 25%,24% 65%,26% 10%,28% 50%,30% 85%,
+    32% 35%,34% 70%,36% 20%,38% 60%,40% 95%,42% 45%,44% 80%,46% 30%,
+    48% 68%,50% 12%,52% 55%,54% 88%,56% 38%,58% 72%,60% 22%,62% 62%,
+    64% 8%,66% 48%,68% 82%,70% 32%,72% 66%,74% 18%,76% 58%,78% 92%,
+    80% 42%,82% 78%,84% 28%,86% 64%,88% 14%,90% 54%,92% 86%,94% 36%,
+    96% 74%,98% 24%,100% 60%,100% 100%
+  );
+}
+
+/* ─── Polaroid card hover ───────────────────── */
+.polaroid-card {
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1),
+              box-shadow 0.35s ease,
+              filter 0.35s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+.polaroid-card:hover {
+  filter: drop-shadow(0 16px 32px rgba(74,55,40,0.3));
+}
+
+/* ─── Modal backdrop ────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,12,5,0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Confetti canvas ───────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* ─── Floral accents ────────────────────────── */
+.floral-accent {
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── Thread glow ───────────────────────────── */
+.thread-glow {
+  filter: drop-shadow(0 0 6px rgba(212,177,106,0.6));
+}
