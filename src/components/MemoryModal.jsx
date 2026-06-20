@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { useDeviceType } from '../hooks/useMediaQuery'
 
 /**
  * MemoryModal — Premium Glassmorphism Viewer
@@ -9,6 +10,8 @@ import { motion } from 'framer-motion'
  * Background: backdrop-blurred Memory Lane (the page behind, not a new scene).
  */
 export default function MemoryModal({ image, pageTitle, originX, originY, onClose }) {
+  const device = useDeviceType()
+  const isMobile = device === 'mobile'
 
   // Keyboard close
   const handleKey = useCallback((e) => {
@@ -81,44 +84,23 @@ export default function MemoryModal({ image, pageTitle, originX, originY, onClos
           }}
           onClick={(e) => e.stopPropagation()}
           style={{
-            // Panel geometry
-            width: 'min(90vw, 1600px)',
-            height: '90vh',
+            position: 'relative',
+            background: 'rgba(255, 252, 245, 0.45)', // frosted cream glass
+            backdropFilter: 'blur(30px) saturate(120%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(120%)',
+            boxShadow: '0 40px 100px rgba(74, 55, 40, 0.25), inset 0 0 0 1.5px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.3)',
+            borderRadius: '20px',
+            padding: isMobile ? '16px 16px 12px' : '24px 32px 20px',
+            width: isMobile ? '95vw' : '90vw',
+            height: isMobile ? '85vh' : '90vh',
+            maxWidth: isMobile ? 500 : 1600,
             maxHeight: '95vh',
-            overflowY: 'hidden', // No scrolling, flex layout
-            pointerEvents: 'auto',
-
-            // Transform-origin = the card's screen position
-            // Makes the panel appear to emerge from that exact spot
-            transformOrigin,
-
-            // ── Glassmorphism ──
-            background: 'rgba(250, 247, 240, 0.82)',
-            backdropFilter: 'blur(36px) saturate(1.9)',
-            WebkitBackdropFilter: 'blur(36px) saturate(1.9)',
-
-            // Elegant border & corners
-            borderRadius: 22,
-            border: '1px solid rgba(212,177,106,0.42)',
-
-            // Layered shadows: depth + glow
-            boxShadow: `
-              0 0 0 1px rgba(212,177,106,0.14),
-              0 2px 0 rgba(255,255,255,0.55) inset,
-              0 -1px 0 rgba(139,107,74,0.12) inset,
-              0 48px 120px rgba(74,55,40,0.28),
-              0 16px 40px rgba(0,0,0,0.14)
-            `,
-
-            // Padding — minimal to maximize image area
-            padding: '24px 32px 20px',
-
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            overflowY: 'hidden',
+            pointerEvents: 'auto',
+            transformOrigin,
             gap: 16,
-
-            position: 'relative',
           }}
         >
           {/* ── CLOSE BUTTON ── */}
@@ -191,34 +173,27 @@ export default function MemoryModal({ image, pageTitle, originX, originY, onClos
           <div
             style={{
               width: '100%',
-              flex: 1, // take remaining height
-              minHeight: 0, // allow flex child to shrink below intrinsic content size
+              flex: 1, 
+              minHeight: 0, 
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              // Slight lift effect — image appears to float above the panel
               filter: 'drop-shadow(0 12px 36px rgba(74,55,40,0.28)) drop-shadow(0 4px 10px rgba(0,0,0,0.12))',
             }}
           >
             <motion.img
               src={image}
               alt={pageTitle.title}
+              loading="lazy"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.42, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                // Auto scale while maintaining aspect ratio, bound to flex container
-                maxWidth: '100%',
-                maxHeight: '100%',
-                width: 'auto',
-                height: 'auto',
-                display: 'block',
-                // White polaroid-style backing hugs the image perfectly
-                background: '#FAFAF6',
-                padding: '10px 10px 36px 10px',
-                boxShadow: '0 2px 0 rgba(255,255,255,0.9) inset',
-                borderRadius: '2px',
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 12px 32px rgba(0,0,0,0.15))',
               }}
             />
           </div>

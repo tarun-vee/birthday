@@ -32,6 +32,7 @@ function CollageItem({ img, index }) {
       <img
         src={img}
         alt={`Memory ${index + 1}`}
+        loading="lazy"
         style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }}
       />
     </motion.div>
@@ -58,10 +59,10 @@ export default function FinalDestination() {
       }
 
       fire(0.25, { spread: 26, startVelocity: 55 })
-      fire(0.2,  { spread: 60 })
+      fire(0.2, { spread: 60 })
       fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 })
-      fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 })
-      fire(0.1,  { spread: 120, startVelocity: 45 })
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 })
+      fire(0.1, { spread: 120, startVelocity: 45 })
 
       setTimeout(() => {
         fire(0.3, { spread: 80, origin: { x: 0.2, y: 0.8 } })
@@ -161,25 +162,24 @@ export default function FinalDestination() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="font-playfair font-black leading-none"
+          className="font-playfair font-black leading-none flex flex-col items-center justify-center w-full"
           style={{
-            fontSize: 'clamp(3rem, 9vw, 7rem)',
+            fontSize: 'clamp(2.5rem, 8vw, 7rem)',
             color: 'var(--dark-brown)',
           }}
         >
-          Happy Birthday
-          <br />
+          <span>Happy Birthday</span>
           <span
             style={{
               color: 'var(--gold)',
               fontStyle: 'italic',
               fontWeight: 700,
-              fontSize: 'clamp(3.5rem, 10vw, 8rem)',
+              fontSize: 'clamp(3rem, 11vw, 8rem)',
+              marginTop: '0.1em'
             }}
           >
-            Deeksha
+            Deeksha <span style={{ fontSize: '0.6em', fontStyle: 'normal' }}>🎂</span>
           </span>
-          <span style={{ fontSize: '0.6em' }}> 🎂</span>
         </motion.h2>
 
         {/* Gold rule */}
@@ -228,13 +228,7 @@ export default function FinalDestination() {
             every page, a chapter.
           </p>
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-              gap: '24px',
-              maxWidth: 800,
-              margin: '0 auto',
-            }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto px-4"
           >
             {IMAGES.map((img, i) => (
               <CollageItem key={i} img={img} index={i} />
@@ -256,7 +250,7 @@ export default function FinalDestination() {
             className="font-inter text-sm tracking-widest uppercase"
             style={{ color: 'var(--coffee)', opacity: 0.6 }}
           >
-            The Deeksha Effect — June 2026
+            SHREYA, SATHVIK, SUMUKH, SHRIYA, YASHAS AND TARUN
           </p>
         </motion.div>
       </div>

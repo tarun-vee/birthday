@@ -107,7 +107,7 @@ export default function LandingSection() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="font-greatVibes text-3xl md:text-4xl mb-4"
+          className="font-greatVibes text-2xl md:text-3xl lg:text-4xl mb-4"
           style={{ color: 'var(--coffee)' }}
         >
           a journey told through moments
@@ -117,16 +117,15 @@ export default function LandingSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="font-playfair font-black leading-none tracking-tight"
+          className="font-playfair font-black leading-none tracking-tight flex flex-col items-center w-full"
           style={{
-            fontSize: 'clamp(3rem, 10vw, 7rem)',
+            fontSize: 'clamp(2.7rem, 11vw, 7rem)',
             color: 'var(--dark-brown)',
             textShadow: '2px 4px 12px rgba(74,55,40,0.12)',
           }}
         >
-          The Deeksha
-          <br />
-          <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Effect</span>
+          <span>The Deeksha</span>
+          <span style={{ color: 'var(--gold)', fontStyle: 'italic', marginTop: '0.1em' }}>Effect</span>
         </motion.h1>
 
         {/* Decorative gold rule */}
@@ -147,7 +146,7 @@ export default function LandingSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.6 }}
-          className="font-cormorant italic text-xl md:text-2xl leading-relaxed min-h-[96px]"
+          className="font-cormorant italic text-lg sm:text-xl md:text-2xl leading-relaxed min-h-[96px] w-full px-4"
           style={{ color: 'var(--dark-brown)' }}
         >
           {displayedLines.map((line, i) => (
